@@ -10,9 +10,8 @@ COPY overlay-rootfs /
 
 # Patch in source for testing sources...
 # Update, install necessary packages, fixup permissions, delete junk
-RUN echo "@testing http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    echo "@edge http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
-    apk add --update skalibs@edge execline@edge s6@edge s6-portable-utils@testing && \
+RUN echo "@edge http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    apk add --update skalibs@edge execline@edge s6@edge s6-portable-utils@edge && \
     rm -rf /var/cache/apk/* && \
     /prepare-files && \
     rm /prepare-files
