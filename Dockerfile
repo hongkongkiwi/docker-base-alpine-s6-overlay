@@ -20,8 +20,9 @@ COPY keys/trust.gpg ${TMP_BUILD_DIR}/
 RUN echo "@edge http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     apk add --update skalibs@edge execline@edge s6@edge s6-portable-utils@edge && \
     apk add --virtual verify gnupg && \
+    chmod 700 ${TMP_BUILD_DIR} && \
     cd ${TMP_BUILD_DIR} && \
-    gpg --no-default-keyring --keyring ./trust.gpg --verify s6-overlay-nobin.tar.gz.sig && \
+    gpg --no-options --no-default-keyring --homedir ${TMP_BUILD_DIR} --keyring ./trust.gpg --no-auto-check-trustdb --trust-model always --verify s6-overlay-nobin.tar.gz.sig s6-overlay-nobin.tar.gz && \
     apk del verify && \
     tar -C / -xzf s6-overlay-nobin.tar.gz && \
     cd / && \
